@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Eksperyment – Wybór mieszkania</title>
+    <script src="experiment.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        td, th {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .hidden {
+            background-color: #eee;
+            color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h2>Wybór mieszkania</h2>
+    <p>Klikaj zakładki, aby odsłonić informacje o mieszkaniach. Na końcu wybierz najlepszą ofertę.</p>
+    <table id="matrix"></table>
+    <br>
+    <label>Twój wybór:
+        <select id="choice">
+            <option value="">-- wybierz --</option>
+            <option value="A">Mieszkanie A</option>
+            <option value="B">Mieszkanie B</option>
+            <option value="C">Mieszkanie C</option>
+        </select>
+    </label>
+    <button onclick="submitData()">Zatwierdź</button>
+    <p id="status"></p>
+</body>
+</html>
