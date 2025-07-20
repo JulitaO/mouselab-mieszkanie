@@ -35,12 +35,12 @@ window.onload = () => {
     const rows = ["A", "B", "C"];
 
     const header = document.createElement("tr");
-    header.innerHTML = "<th></th>" + attrs.map(a => `<th>{a}</th>`).join("");
+    header.innerHTML = "<th></th>" + attrs.map(a => `<th>${a}</th>`).join("");
     table.appendChild(header);
 
     rows.forEach(row => {
         const tr = document.createElement("tr");
-        tr.innerHTML = `<th>Mieszkanie {row}</th>` + attrs.map(attr => {
+        tr.innerHTML = `<th>Mieszkanie ${row}</th>` + attrs.map(attr => {
             const td = document.createElement("td");
             td.classList.add("hidden");
             td.dataset.value = matrixData[row][attr];
@@ -49,7 +49,7 @@ window.onload = () => {
                     this.textContent = this.dataset.value;
                     this.classList.remove("hidden");
                     clicks++;
-                    sequence.push(`{row}:{attr}`);
+                    sequence.push(`${row}:${attr}`);
                 }
             };
             return td.outerHTML;
