@@ -38,47 +38,46 @@ window.onload = () => {
     header.innerHTML = "<th></th>" + attrs.map(a => `<th>${a}</th>`).join("");
     table.appendChild(header);
 
-  rows.forEach(row => {
-    const tr = document.createElement("tr");
+    rows.forEach(row => {
+        const tr = document.createElement("tr");
 
-    const th = document.createElement("th");
-    th.textContent = `Mieszkanie ${row}`;
-    tr.appendChild(th);
+        const th = document.createElement("th");
+        th.textContent = `Mieszkanie ${row}`;
+        tr.appendChild(th);
 
-attrs.forEach(attr => {
-    const td = document.createElement("td");
-    td.classList.add("hidden");
-    td.textContent = "?";
-    td.dataset.value = matrixData[row][attr];
+        attrs.forEach(attr => {
+            const td = document.createElement("td");
+            td.classList.add("hidden");
+            td.textContent = "?";
+            td.dataset.value = matrixData[row][attr];
 
-    let hoverStart = null;
+            let hoverStart = null;
 
-    td.onclick = function () {
-        if (this.classList.contains("hidden")) {
-            this.textContent = this.dataset.value;
-            this.classList.remove("hidden");
-            clicks++;
+            td.onclick = function () {
+                if (this.classList.contains("hidden")) {
+                    this.textContent = this.dataset.value;
+                    this.classList.remove("hidden");
+                    clicks++;
 
-            // Zapisz czas rozpoczęcia podglądu
-            hoverStart = Date.now();
+                    hoverStart = Date.now();
 
-            this.addEventListener("mouseleave", function handleLeave() {
-                const hoverDuration = ((Date.now() - hoverStart) / 1000).toFixed(2);
-                sequence.push(`${row}:${attr}:${hoverDuration}s`);
+                    this.addEventListener("mouseleave", function handleLeave() {
+                        const hoverDuration = ((Date.now() - hoverStart) / 1000).toFixed(2);
+                        sequence.push(`${row}:${attr}:${hoverDuration}s`);
 
-                this.textContent = "?";
-                this.classList.add("hidden");
+                        this.textContent = "?";
+                        this.classList.add("hidden");
 
-                this.removeEventListener("mouseleave", handleLeave);
-            }, { once: true });
-        }
-    };
+                        this.removeEventListener("mouseleave", handleLeave);
+                    }, { once: true });
+                }
+            };
 
-    tr.appendChild(td);
-});
+            tr.appendChild(td);
+        });
 
-    table.appendChild(tr);
-});
+        table.appendChild(tr);
+    });
 };
 
 function submitData() {
@@ -87,6 +86,7 @@ function submitData() {
         document.getElementById("status").textContent = "Wybierz ofertę przed zatwierdzeniem.";
         return;
     }
+
     const timeTaken = Math.round((Date.now() - startTime) / 1000);
     const payload = {
         time: timeTaken,
@@ -94,17 +94,12 @@ function submitData() {
         sequence: sequence,
         choice: choice
     };
-    fetch("https://script.google.com/macros/s/AKfycbxkecSilLrshUB0iNY3sCwCjAcdKtn7HHDsuhNcfhsqNMA8VwxqQpC1BU82NniMCGc/exec", {
+
+    fetch("https://script.google.com/macros/s/AKfycby05Wmu7foP4mrzKEBhpHV8t-TBEt5Bf_WwFtzjoie5hOJpa6gYO5PoX_4bNLWD32NAJQ/exec", {
         method: "POST",
         body: JSON.stringify(payload),
         headers: {
             "Content-Type": "application/json"
         }
-    }).then(res => {
-        if (res.ok) {
-            document.getElementById("status").textContent = "Dziękujemy! Dane zostały zapisane.";
-        } else {
-            document.getElementById("status").textContent = "Błąd przy zapisie.";
-        }
-    });
-}
+    })
+    .then(res => {
