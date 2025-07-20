@@ -38,25 +38,31 @@ window.onload = () => {
     header.innerHTML = "<th></th>" + attrs.map(a => `<th>${a}</th>`).join("");
     table.appendChild(header);
 
-    rows.forEach(row => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<th>Mieszkanie ${row}</th>` + attrs.map(attr => {
-            const td = document.createElement("td");
-            td.classList.add("hidden");
-            td.textContent = "?";  // ← dodane
-            td.dataset.value = matrixData[row][attr];
-            td.onclick = function() {
-                if (this.classList.contains("hidden")) {
-                    this.textContent = this.dataset.value;
-                    this.classList.remove("hidden");
-                    clicks++;
-                    sequence.push(`${row}:${attr}`);
-                }
-            };
-            return td.outerHTML;
-        }).join("");
-        table.appendChild(tr);
+  rows.forEach(row => {
+    const tr = document.createElement("tr");
+    
+    const th = document.createElement("th");
+    th.textContent = `Mieszkanie ${row}`;
+    tr.appendChild(th);
+
+    attrs.forEach(attr => {
+        const td = document.createElement("td");
+        td.classList.add("hidden");
+        td.textContent = "?";
+        td.dataset.value = matrixData[row][attr];
+        td.onclick = function() {
+            if (this.classList.contains("hidden")) {
+                this.textContent = this.dataset.value;
+                this.classList.remove("hidden");
+                clicks++;
+                sequence.push(`${row}:${attr}`);
+            }
+        };
+        tr.appendChild(td);
     });
+
+    table.appendChild(tr);
+});
 };
 
 function submitData() {
