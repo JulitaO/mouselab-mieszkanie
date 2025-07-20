@@ -1,6 +1,6 @@
 const matrixData = {
     A: {
-        Cena: "585 000 zł (10 636 zł/m²)",
+        Cena: "585 000 zł",
         "Odległość od centrum": "Blisko centrum",
         "Metraż": "55 m²",
         "Rynek": "Wtórny",
@@ -8,7 +8,7 @@ const matrixData = {
         "Dostęp do komunikacji": "Dobra"
     },
     B: {
-        Cena: "598 000 zł (11 964 zł/m²)",
+        Cena: "598 000 zł",
         "Odległość od centrum": "Daleko od centrum",
         "Metraż": "50 m²",
         "Rynek": "Pierwotny",
@@ -16,7 +16,7 @@ const matrixData = {
         "Dostęp do komunikacji": "Bardzo dobra"
     },
     C: {
-        Cena: "555 000 zł (11 111 zł/m²)",
+        Cena: "555 000 zł",
         "Odległość od centrum": "Blisko centrum",
         "Metraż": "50 m²",
         "Rynek": "Wtórny",
@@ -43,6 +43,7 @@ window.onload = () => {
         tr.innerHTML = `<th>Mieszkanie ${row}</th>` + attrs.map(attr => {
             const td = document.createElement("td");
             td.classList.add("hidden");
+            td.textContent = "?";  // ← dodane
             td.dataset.value = matrixData[row][attr];
             td.onclick = function() {
                 if (this.classList.contains("hidden")) {
