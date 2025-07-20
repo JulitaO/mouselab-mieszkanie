@@ -45,29 +45,37 @@ window.onload = () => {
     th.textContent = `Mieszkanie ${row}`;
     tr.appendChild(th);
 
-    attrs.forEach(attr => {
-        const td = document.createElement("td");
-        td.classList.add("hidden");
-        td.textContent = "?";
-        td.dataset.value = matrixData[row][attr];
+attrs.forEach(attr => {
+    const td = document.createElement("td");
+    td.classList.add("hidden");
+    td.textContent = "?";
+    td.dataset.value = matrixData[row][attr];
 
-        td.onclick = function () {
-            if (this.classList.contains("hidden")) {
-                this.textContent = this.dataset.value;
-                this.classList.remove("hidden");
-                clicks++;
-                sequence.push(`${row}:${attr}`);
+    let hoverStart = null;
 
-                this.addEventListener("mouseleave", function handleLeave() {
-                    this.textContent = "?";
-                    this.classList.add("hidden");
-                    this.removeEventListener("mouseleave", handleLeave);
-                });
-            }
-        };
+    td.onclick = function () {
+        if (this.classList.contains("hidden")) {
+            this.textContent = this.dataset.value;
+            this.classList.remove("hidden");
+            clicks++;
 
-        tr.appendChild(td);
-    });
+            // Zapisz czas rozpoczęcia podglądu
+            hoverStart = Date.now();
+
+            this.addEventListener("mouseleave", function handleLeave() {
+                const hoverDuration = ((Date.now() - hoverStart) / 1000).toFixed(2);
+                sequence.push(`${row}:${attr}:${hoverDuration}s`);
+
+                this.textContent = "?";
+                this.classList.add("hidden");
+
+                this.removeEventListener("mouseleave", handleLeave);
+            }, { once: true });
+        }
+    };
+
+    tr.appendChild(td);
+});
 
     table.appendChild(tr);
 });
