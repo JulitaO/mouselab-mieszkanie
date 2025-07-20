@@ -103,3 +103,14 @@ function submitData() {
         }
     })
     .then(res => {
+         if (res.ok) {
+            document.getElementById("status").textContent = "Dziękujemy! Dane zostały zapisane.";
+        } else {
+            document.getElementById("status").textContent = "Błąd przy zapisie.";
+        }
+    })
+    .catch(err => {
+        document.getElementById("status").textContent = "Błąd połączenia.";
+        console.error(err);
+    });
+}
