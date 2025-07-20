@@ -40,7 +40,7 @@ window.onload = () => {
 
   rows.forEach(row => {
     const tr = document.createElement("tr");
-    
+
     const th = document.createElement("th");
     th.textContent = `Mieszkanie ${row}`;
     tr.appendChild(th);
@@ -50,14 +50,22 @@ window.onload = () => {
         td.classList.add("hidden");
         td.textContent = "?";
         td.dataset.value = matrixData[row][attr];
-        td.onclick = function() {
+
+        td.onclick = function () {
             if (this.classList.contains("hidden")) {
                 this.textContent = this.dataset.value;
                 this.classList.remove("hidden");
                 clicks++;
                 sequence.push(`${row}:${attr}`);
+
+                this.addEventListener("mouseleave", function handleLeave() {
+                    this.textContent = "?";
+                    this.classList.add("hidden");
+                    this.removeEventListener("mouseleave", handleLeave);
+                });
             }
         };
+
         tr.appendChild(td);
     });
 
