@@ -95,7 +95,7 @@ function submitData() {
         choice: choice
     };
 
-    fetch("https://script.google.com/macros/s/AKfycbx3IQGZxgmIlr30-k7zWbzFOqeYfbng5B8jvM_GXctZtc3qX_3I6Fvzf2ES_dzzyRbC/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbx8A0_XFe55VqL3UV2YPduI5cpiwLsao63w10vojP_M5pBRqAjYtuh31Lc56ukCmQAh/exec", {
         method: "POST",
         body: JSON.stringify(payload),
         headers: {
